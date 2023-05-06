@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accueil</title>
+</head>
+<body>
+	<h1>Bienvenue sur notre site</h1>
+    {% if username %}
+		<h2> USER : {{ username }} </h2>
+		<h2> EMAIL : {{ email }} </h2>
+		<h2> PASSWORD : {{ password }} </h2>
+	{% else %}
+		<p>Vous pouvez vous connecter ou vous inscrire en cliquant sur les liens ci-dessous :</p>
+		<ul>
+			<li><a href="/login">Connexion</a></li>
+			<li><a href="/register">Inscription</a></li>
+		</ul>
+    {% endif %}
+</body>
+</html>
