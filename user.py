@@ -92,3 +92,44 @@ def getUser(username):
         return None
     else:
         return result[0]
+
+def AccountToStr(account) -> str:
+    strToReturn = ""
+    if account is not None:
+        strToReturn += account.find("username").text + "\n"
+        strToReturn += account.find("email").text + "\n"
+        strToReturn += account.find("password").text
+    return strToReturn
+
+def TestGetAll():
+    tree = etree.parse("users.xml")
+    try:
+
+
+
+        xpath_query = "/users/user[username='admin']/email | /users/user[password='admin' or true()]/password | /users/user[username='admin']/email"
+        #xpath_query = "/users/user[username='admin']/email | /users/user[password='admin' or true()]/password"
+        #xpath_query = "/users/user[password='' or true()]/password"
+        result = tree.xpath(xpath_query)
+        print(len(result))
+        for account in result:
+            print(account.text)
+    except Exception as e:
+        return e
+
+
+def GetUsersBy(filterUser):
+    tree = etree.parse("users.xml")
+    try:
+        #xpath_query = "/users/user[username='" + str(filterUser) + "']/email"
+        xpath_query = "/users/user[starts-with(username, '" + filterUser +"')]/email"
+        result = tree.xpath(xpath_query)
+        strToReturn = ""
+        print(len(result))
+        for account in result:
+            strToReturn += etree.tostring(account, encoding="unicode", pretty_print=True) + "\n"
+        print(strToReturn)
+        if len(result) > 0:
+            return strToReturn
+    except Exception as e:
+        return e

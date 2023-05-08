@@ -4,15 +4,25 @@ from user import verify_credentials
 from user import userExist
 from user import userExistEmail
 from user import getUser
-
+from user import AccountToStr
+import user as User
 app = Flask(__name__)
 app.secret_key = b'f\x95P"\xb4\xebp9r\xe9`\xb5rt\x97h\xd3lQ\x95\x19\xac4\x8e'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    User.TestGetAll()
+    AllUsersFiltered = None
+    if request.method == 'POST':
+        UserFilter = request.form["SearchUsername"]
+        AllUsersFiltered = User.GetUsersBy(UserFilter)
+
+
     username = None
     email = None
     password = None
+
+    AccountStr = None
     if session.get("logged_in") == True:
         usernameSessions = session.get('username')
         account = getUser(usernameSessions)
@@ -20,8 +30,11 @@ def index():
             username = account.find("username").text
             email = account.find("email").text
             password = account.find("password").text
-    
-    return render_template('index.html', username=username, email=email, password=password)
+            AccountStr = account
+            #print("ACCOUNT STRING :", AccountStr)
+
+    return render_template('index.html', username=username, email=email, password=password, AllUsersFiltered=AllUsersFiltered)
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -64,4 +77,4 @@ def login():
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
