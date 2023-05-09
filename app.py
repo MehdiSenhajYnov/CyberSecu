@@ -11,17 +11,21 @@ app.secret_key = b'f\x95P"\xb4\xebp9r\xe9`\xb5rt\x97h\xd3lQ\x95\x19\xac4\x8e'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    User.TestGetAll()
+    #User.TestGetAll()
     AllUsersFiltered = None
     if request.method == 'POST':
-        UserFilter = request.form["SearchUsername"]
-        AllUsersFiltered = User.GetUsersBy(UserFilter)
-
+        if "SearchUsername" in request.form:
+            UserFilter = request.form["SearchUsername"]
+            AllUsersFiltered = User.GetUsersBy(UserFilter)
+        if "Deconnexion" in request.form:
+            session.pop("logged_in", None)
+            session.pop("username", None)
+            return render_template('index.html', username=None, email=None, password=None, role=None, AllUsersFiltered=None)
 
     username = None
     email = None
     password = None
-
+    role = None
     AccountStr = None
     if session.get("logged_in") == True:
         usernameSessions = session.get('username')
@@ -30,10 +34,9 @@ def index():
             username = account.find("username").text
             email = account.find("email").text
             password = account.find("password").text
+            role = account.find("role").text
             AccountStr = account
-            #print("ACCOUNT STRING :", AccountStr)
-
-    return render_template('index.html', username=username, email=email, password=password, AllUsersFiltered=AllUsersFiltered)
+    return render_template('index.html', username=username, email=email, password=password, role=role, AllUsersFiltered=AllUsersFiltered)
 
 
 
