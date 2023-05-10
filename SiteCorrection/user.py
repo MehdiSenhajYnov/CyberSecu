@@ -27,7 +27,6 @@ def save_user_to_xml(username, email, password):
     password_element.text = password
     role_element = ET.SubElement(user, "role")
     role_element.text = "user"
-
     # Charger l'arbre XML existant depuis le fichier s'il existe, sinon créer un nouvel arbre
     try:
         tree = ET.parse("users.xml")
@@ -35,12 +34,11 @@ def save_user_to_xml(username, email, password):
     except FileNotFoundError:
         root = ET.Element("users")
         tree = ET.ElementTree(root)
-
     # Ajouter le nouvel élément "user" à l'élément racine "users"
     root.append(user)
     tree.write("users.xml")
 
-def userExist(username):
+def userExist(username) -> bool:
     try:
         tree = ET.parse('users.xml')
         root = tree.getroot()
@@ -51,7 +49,7 @@ def userExist(username):
             return True
     return False
 
-def userExistEmail(email):
+def userExistEmail(email) -> bool:
     try:
         tree = ET.parse('users.xml')
         root = tree.getroot()
@@ -62,7 +60,7 @@ def userExistEmail(email):
             return True
     return False
 
-def verify_credentials(email, password):
+def verify_credentials(email, password) -> bool:
     tree = ET.parse('users.xml') # chemin vers le fichier XML
     root = tree.getroot()
     for user in root.findall('user'):
@@ -90,7 +88,7 @@ def AccountToStr(account) -> str:
         strToReturn += account.find("password").text
     return strToReturn
 
-def GetUsersBy(filterUser):
+def GetUsersBy(filterUser) -> str:
     tree = ET.parse('users.xml') # chemin vers le fichier XML
     root = tree.getroot()
     filtered_users = []

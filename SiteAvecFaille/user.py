@@ -90,14 +90,6 @@ def getUser(username):
     else:
         return result[0]
 
-def AccountToStr(account) -> str:
-    strToReturn = ""
-    if account is not None:
-        strToReturn += account.find("username").text + "\n"
-        strToReturn += account.find("email").text + "\n"
-        strToReturn += account.find("password").text
-    return strToReturn
-
 def GetUsersBy(filterUser):
     tree = etree.parse("users.xml")
     try:

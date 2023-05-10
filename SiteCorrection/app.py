@@ -4,7 +4,6 @@ from user import verify_credentials
 from user import userExist
 from user import userExistEmail
 from user import getUser
-from user import AccountToStr
 import user as User
 app = Flask(__name__)
 app.secret_key = b'f\x95P"\xb4\xebp9r\xe9`\xb5rt\x97h\xd3lQ\x95\x19\xac4\x8e'
@@ -26,7 +25,6 @@ def index():
     email = None
     password = None
     role = None
-    AccountStr = None
     if session.get("logged_in") == True:
         usernameSessions = session.get('username')
         account = getUser(usernameSessions)
@@ -35,7 +33,6 @@ def index():
             email = account.find("email").text
             password = account.find("password").text
             role = account.find("role").text
-            AccountStr = account
     return render_template('index.html', username=username, email=email, password=password, role=role, AllUsersFiltered=AllUsersFiltered)
 
 
