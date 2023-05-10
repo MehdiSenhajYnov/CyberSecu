@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accueil</title>
+</head>
+<body>
+	<h1>LinkedOn</h1>
+	<h2>Site en développement</h2>
+    {% if username %}
+		<h3> Bienvenue {{ username }} </h3>
+	{% else %}
+		<p>Vous pouvez vous connecter ou vous inscrire en cliquant sur les liens ci-dessous :</p>
+		<ul>
+			<li><a href="/login">Connexion</a></li>
+			<li><a href="/register">Inscription</a></li>
+		</ul>
+
+		<br><br>
+
+	{% endif %}
+
+    {% if role %}
+
+		{% if role == "admin" %}
+		
+			<form method="post">
+				<label>Nom d'utilisateur:</label><br>
+				<input type="text" name="SearchUsername"><br>
+				<input type="submit" value="Chercher">
+			</form>
+			{% if AllUsersFiltered %}
+				<p> USER : {{ AllUsersFiltered }} </p>
+			
+			{% endif %}
+
+		{% endif %}
+
+		{% if role == "user" %}
+			Contactez l'admin à l'adresse admin@gmail.com pour plus d'information 
+		{% endif %}
+
+		<br><br>
+		<form method="post">
+			<input type="submit" name="Deconnexion" value="Deconnexion">
+		</form>
+	{% endif %}
+
+
+</body>
+</html>

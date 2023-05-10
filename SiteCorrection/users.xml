@@ -1,0 +1,6 @@
+<users>
+<user><username>admin</username><email>admin@gmail.com</email><password>admin</password><role>admin</role></user>
+<user><username>popo</username><email>popo@gmail.com</email><password>popo</password><role>user</role></user>
+<user><username>pipo</username><email>pipo@gmail.com</email><password>pipo</password><role>user</role></user>
+<user><username>test</username><email>test@gmail.com</email><password>test</password><role>user</role></user>
+</users>
